@@ -6,7 +6,7 @@ let data3: number | string;
 data = '42';
 
 
-interface ICar{
+export interface ICar{
     color: string;
     model: string;
     topSpeed?: number;
@@ -26,3 +26,5 @@ const car2 : ICar = {
 const multiple = (x: number, y: number) => {
     (x * y).toString();
 }
+
+export const cars = [car1, car2];
