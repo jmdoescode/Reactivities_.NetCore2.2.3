@@ -39,7 +39,7 @@ namespace API
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
                 });
             });
-            services.AddMediatR(typeof(Application.Activities.List.Handler).Assembly);
+            services.AddMediatR(typeof(Application.Activities.List.Handler).Assembly); //finds the assembly in which the typeof(List.Handler) lives
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
