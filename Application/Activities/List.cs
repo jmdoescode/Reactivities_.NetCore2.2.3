@@ -30,7 +30,7 @@ namespace Application.Activities
                     for (var i = 0; i < 10; i++)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        await Task.Delay(1000, cancellationToken); //delay by a second
+                        //await Task.Delay(1000, cancellationToken); //delay by a second
                         _logger.LogInformation($"Task {i} has completed");
                     }
                 }
