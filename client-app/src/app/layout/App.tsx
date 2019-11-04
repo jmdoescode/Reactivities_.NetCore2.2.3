@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Header, Icon, List } from 'semantic-ui-react'
-import './App.css';
-import { cars } from './demo';
-import CarItem from './CarItem';
 import axios from 'axios'
 
 class App extends Component {
