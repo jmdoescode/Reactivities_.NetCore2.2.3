@@ -8,6 +8,7 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
+  const [editMode, setEditMode] = useState(false); //smart enough to infer type by the initial value
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.filter(a => a.id === id)[0]);
@@ -30,6 +31,8 @@ const App = () => {
           selectActivity={handleSelectActivity}
           //selectedActivity={selectedActivity!} //use exclamation mark defines it as an activity or null (overrides the type safety)
           selectedActivity={selectedActivity} //better to define union type as null in ActivityDashboard
+          editMode={editMode}
+          setEditMode={setEditMode}
         />
       </Container>
     </Fragment>
