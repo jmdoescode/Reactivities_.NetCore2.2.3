@@ -7,7 +7,7 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>();
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.filter(a => a.id === id)[0]);
@@ -29,7 +29,7 @@ const App = () => {
           activities={activities}
           selectActivity={handleSelectActivity}
           //selectedActivity={selectedActivity!} //use exclamation mark defines it as an activity or null (overrides the type safety)
-          selectedActivity={selectedActivity!} //better to define union type as null in ActivityDashboard
+          selectedActivity={selectedActivity} //better to define union type as null in ActivityDashboard
         />
       </Container>
     </Fragment>
