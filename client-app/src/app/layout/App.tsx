@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { Header, Icon, List } from 'semantic-ui-react'
 import axios from 'axios'
+import { IActivity } from './../../models/activity';
 
-class App extends Component {
-  state = {
+interface IState {
+  activities: IActivity[]
+}
+
+class App extends Component<{}, IState> {
+  readonly state: IState = {
     activities: []
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/api/activities')
+    axios.get<IActivity[]>('http://localhost:5000/api/activities')
       .then((response) => {
         this.setState({
-          values: response.data
+          activities: response.data
         })
       })
   }
@@ -24,8 +29,8 @@ class App extends Component {
           <Header.Content>Reactivities</Header.Content>
         </Header>
         <List>
-          {this.state.activities.map((activity: any) => (
-            <List.Item key={activity.id}>{activity.name}</List.Item>
+          {this.state.activities.map((activity) => (
+            <List.Item key={activity.id}>{activity.title}</List.Item>
           ))}
         </List>
       </div>
