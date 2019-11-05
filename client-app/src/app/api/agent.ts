@@ -5,11 +5,16 @@ axios.defaults.baseURL = 'http://localhost:5000/api'; //6.071 - every api reques
 
 const responseBody = (response: AxiosResponse) => response.data;
 
+const sleep = (ms: number) => (response: AxiosResponse) =>
+    new Promise<AxiosResponse>(resolve => setTimeout(() => resolve(response), ms));
+
+const sleepAmount: number = 1000;
+
 const requests = {
-    get: (url: string) => axios.get(url).then(responseBody),
-    post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
-    put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
-    del: (url: string) => axios.delete(url).then(responseBody),
+    get: (url: string) => axios.get(url).then(sleep(sleepAmount)).then(responseBody),
+    post: (url: string, body: {}) => axios.post(url, body).then(sleep(sleepAmount)).then(responseBody),
+    put: (url: string, body: {}) => axios.put(url, body).then(sleep(sleepAmount)).then(responseBody),
+    del: (url: string) => axios.delete(url).then(sleep(sleepAmount)).then(responseBody),
 }
 
 const Activities = {
