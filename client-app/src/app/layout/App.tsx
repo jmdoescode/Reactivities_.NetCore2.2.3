@@ -4,11 +4,13 @@ import NavBar from "./../../features/nav/NavBar";
 import { IActivity } from "./../models/activity";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import agent from "./../api/agent";
+import LoadingComponent from './LoadingComponent';
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
   const [editMode, setEditMode] = useState(false); //smart enough to infer type by the initial value
+  const [loading, setLoading] = useState(true);
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.filter(a => a.id === id)[0]);
@@ -51,8 +53,11 @@ const App = () => {
           activities.push(activity);
         });
         setActivities(activities);
-      });
+      })
+      .then(() => setLoading(false));
   }, []); //empty array ensures that useEffect will run 1 time only - every time this component renders the useEffect method will be called
+
+  if (loading) return <LoadingComponent content='Loading activities...' />
 
   return (
     <Fragment>
