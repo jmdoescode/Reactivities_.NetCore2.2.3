@@ -6,6 +6,7 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 import agent from "./../api/agent";
 import LoadingComponent from './LoadingComponent';
 import ActivityStore from './../stores/activityStore';
+import { observer } from 'mobx-react-lite';
 
 const App = () => {
   const activityStore = useContext(ActivityStore);
@@ -56,27 +57,19 @@ const App = () => {
   }
 
   useEffect(() => {
-    agent.Activities.list()
-      .then(response => {
-        let activities: IActivity[] = [];
-        response.forEach((activity) => {
-          activity.date = activity.date.split('.')[0];
-          activities.push(activity);
-        });
-        setActivities(activities);
-      })
-      .then(() => setLoading(false));
-  }, []); //empty array ensures that useEffect will run 1 time only - every time this component renders the useEffect method will be called
+    activityStore.loadActivities();
+  }, [activityStore]);
+    //5.054 - empty array ensures that useEffect will run 1 time only - every time this component renders the useEffect method will be called
+    //7.082 - in the same empty array in 5.054 - specify activity store
 
-  if (loading) return <LoadingComponent content='Loading activities...' />
+  if (activityStore.loadingInitial) return <LoadingComponent content='Loading activities...' />
 
   return (
     <Fragment>
       <NavBar openCreateForm={handleOpenCreateForm} />
       <Container style={{ marginTop: "7em" }}>
-        <h1>{activityStore.title}</h1>
         <ActivityDashboard
-          activities={activities}
+          activities={activityStore.activities}
           selectActivity={handleSelectActivity}
           //selectedActivity={selectedActivity!} //use exclamation mark defines it as an activity or null (overrides the type safety)
           selectedActivity={selectedActivity} //better to define union type as null in ActivityDashboard
@@ -94,4 +87,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default observer(App); //7.082 - need to make App an observer of activites
