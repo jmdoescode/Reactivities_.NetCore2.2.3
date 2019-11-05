@@ -37,7 +37,9 @@ const App = () => {
   } //5.066 - filter out the activity bc you will add the new activity
 
   const handleDeleteActivity = (id: string) => {
-    setActivities([...activities.filter(a => a.id !== id)]);
+    agent.Activities.delete(id).then(() => {
+      setActivities([...activities.filter(a => a.id !== id)]);
+    })
   }
 
   useEffect(() => {
