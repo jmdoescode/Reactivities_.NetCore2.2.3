@@ -1,15 +1,20 @@
 import React, { useState, FormEvent } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 import { IActivity } from "./../../../app/models/activity";
+import { v4 as uuid } from 'uuid';
 
 interface IProps {
   setEditMode: (editMode: boolean) => void;
   activity: IActivity;
+  createActivity: (activity: IActivity) => void;
+  editActivity: (activity: IActivity) => void;
 }
 
 const ActivityForm: React.FC<IProps> = ({
   setEditMode,
-  activity: initialFormState
+  activity: initialFormState,
+  createActivity,
+  editActivity
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
@@ -30,7 +35,15 @@ const ActivityForm: React.FC<IProps> = ({
   const [activity, setActivity] = useState<IActivity>(initializeForm);
 
   const handleSubmit = () => {
-      console.log(activity);
+      if (activity.id.length === 0) {
+        let newActivity = {
+          ...activity,
+          id: uuid() //5.066 - from the uuid npm
+        }
+        createActivity(newActivity);
+      } else {
+        editActivity(activity);
+      }
   }
 
   //5.065 - event: from onChange handler from our input
@@ -65,7 +78,7 @@ const ActivityForm: React.FC<IProps> = ({
         <Form.Input
           onChange={handleInputChange}
           name="date"
-          type="datetime-local"
+          type="date"
           placeholder="Date"
           value={activity.date}
         />
