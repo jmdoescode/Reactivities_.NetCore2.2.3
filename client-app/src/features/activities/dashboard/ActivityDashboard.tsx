@@ -31,10 +31,10 @@ const ActivityDashboard: React.FC<IProps> = ({
       <Grid.Column width={6}>
         {/* && - everything to the right only display if it is not null*/}
         { selectedActivity && !editMode && (
-          <ActivityDetails activity={selectedActivity} setEditMode={setEditMode} 
+          <ActivityDetails activity={selectedActivity} setEditMode={setEditMode}
             setSelectedActivity={setSelectedActivity} />
         )}
-        { editMode && <ActivityForm setEditMode={setEditMode} /> }
+        { editMode && <ActivityForm setEditMode={setEditMode} activity={selectedActivity!} /> } { /* 5.064 - add ! instead of union type null */}
       </Grid.Column>
     </Grid>
   );
