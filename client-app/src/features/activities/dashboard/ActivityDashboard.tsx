@@ -43,6 +43,7 @@ const ActivityDashboard: React.FC<IProps> = ({
           target={target}
         ></ActivityList>
       </Grid.Column>
+      test test
       <Grid.Column width={6}>
         {/* && - everything to the right only display if it is not null*/}
         {selectedActivity && !editMode && (
