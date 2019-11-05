@@ -45,6 +45,7 @@ const ActivityDashboard: React.FC<IProps> = ({
         )}
         {editMode && (
           <ActivityForm
+            key={selectedActivity && selectedActivity.id || 0} //5.067 - bc it will cause component to reinitialize when you click Edit & createActivity
             setEditMode={setEditMode}
             activity={selectedActivity!}
             createActivity={createActivity}
