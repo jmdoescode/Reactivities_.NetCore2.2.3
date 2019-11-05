@@ -29,7 +29,6 @@ const ActivityDetails: React.FC<IProps> = ({
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths={2}>
-          {" "}
           {/* width of 2 to represent there are 2 buttons */}
           <Button
             onClick={() => setEditMode(true)}
