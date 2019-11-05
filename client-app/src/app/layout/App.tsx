@@ -71,9 +71,6 @@ const App = () => {
         <ActivityDashboard
           activities={activityStore.activities}
           selectActivity={handleSelectActivity}
-          //selectedActivity={selectedActivity!} //use exclamation mark defines it as an activity or null (overrides the type safety)
-          selectedActivity={selectedActivity} //better to define union type as null in ActivityDashboard
-          editMode={editMode}
           setEditMode={setEditMode}
           setSelectedActivity={setSelectedActivity}
           createActivity={handleCreateActivity}
