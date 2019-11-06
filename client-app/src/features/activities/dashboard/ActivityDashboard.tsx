@@ -1,6 +1,5 @@
-import React, { SyntheticEvent, useContext } from "react";
+import React, { useContext } from "react";
 import { Grid } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/activity";
 import ActivityList from "./ActivityList";
 import ActivityDetails from "./../details/ActivityDetails";
 import ActivityForm from "./../form/ActivityForm";
@@ -9,7 +8,7 @@ import ActivityStore from '../../../app/stores/activityStore'
 
 const ActivityDashboard: React.FC = () => {
   const activityStore = useContext(ActivityStore);
-  const {activities, editMode, selectedActivity, selectActivity} = activityStore;
+  const {editMode, selectedActivity} = activityStore;
 
   return (
     <Grid>
