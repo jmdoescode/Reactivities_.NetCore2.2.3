@@ -8,6 +8,7 @@ class ActivityStore {
     @observable selectedActivity: IActivity | undefined;
     @observable loadingInitial = false;
     @observable editMode = false;
+    @observable submitting = false;
 
     @action loadActivities = async () => {
         this.loadingInitial = true;
@@ -23,6 +24,24 @@ class ActivityStore {
             console.log(error);
             this.loadingInitial = false //7.084 - in the catch as well so that if we have a problem it'll stay in loading
         }
+    };
+
+    @action createActivity = async (activity: IActivity) => {
+        this.submitting = true;
+        try{
+            await agent.Activities.create(activity);
+            this.activities.push(activity);
+            this.editMode = false;
+            this.submitting = false;
+        }catch(error){
+            this.submitting = false;
+            console.log(error);
+        }
+    }
+
+    @action openCreateForm = () => {
+        this.editMode = true;
+        this.selectedActivity = undefined;
     }
 
     @action selectActivity = (id: string) => {
@@ -31,4 +50,4 @@ class ActivityStore {
     }
 }
 
-export default createContext(new ActivityStore()) //7.081 - make sure to auto import from react
+export default createContext(new ActivityStore()) //7.081 - make sure to auto import from reactimport { IActivity } from './../models/activity';

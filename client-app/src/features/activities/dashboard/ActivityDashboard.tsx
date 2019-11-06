@@ -8,11 +8,8 @@ import { observer } from 'mobx-react-lite';
 import ActivityStore from '../../../app/stores/activityStore'
 
 interface IProps {
-  activities: IActivity[];
-  selectActivity: (id: string) => void;
   setEditMode: (editMode: boolean) => void;
   setSelectedActivity: (activity: IActivity | null) => void;
-  createActivity: (activity: IActivity) => void;
   editActivity: (activity: IActivity) => void;
   deleteActivity: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
@@ -20,11 +17,8 @@ interface IProps {
 }
 
 const ActivityDashboard: React.FC<IProps> = ({
-  activities,
-  selectActivity,
   setEditMode,
   setSelectedActivity,
-  createActivity,
   editActivity,
   deleteActivity,
   submitting,
@@ -37,8 +31,8 @@ const ActivityDashboard: React.FC<IProps> = ({
     <Grid>
       <Grid.Column width={10}>
         <ActivityList
-          activities={activities}
-          selectActivity={selectActivity}
+          activities={activityStore.activities}
+          selectActivity={activityStore.selectActivity}
           deleteActivity={deleteActivity}
           submitting={submitting}
           target={target}
@@ -58,7 +52,6 @@ const ActivityDashboard: React.FC<IProps> = ({
             key={(selectedActivity && selectedActivity.id) || 0} //5.067 - bc it will cause component to reinitialize when you click Edit & createActivity
             setEditMode={setEditMode}
             activity={selectedActivity!}
-            createActivity={createActivity}
             editActivity={editActivity}
             submitting={submitting}
           />
