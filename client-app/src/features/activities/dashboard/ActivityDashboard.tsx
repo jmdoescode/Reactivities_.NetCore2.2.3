@@ -8,31 +8,23 @@ import { observer } from 'mobx-react-lite';
 import ActivityStore from '../../../app/stores/activityStore'
 
 interface IProps {
-  setEditMode: (editMode: boolean) => void;
-  setSelectedActivity: (activity: IActivity | null) => void;
-  editActivity: (activity: IActivity) => void;
   deleteActivity: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
   target: string;
 }
 
 const ActivityDashboard: React.FC<IProps> = ({
-  setEditMode,
-  setSelectedActivity,
-  editActivity,
   deleteActivity,
   submitting,
   target
 }) => {
   const activityStore = useContext(ActivityStore);
-  const {editMode, selectedActivity} = activityStore;
+  const {activities, editMode, selectedActivity, selectActivity} = activityStore;
 
   return (
     <Grid>
       <Grid.Column width={10}>
         <ActivityList
-          activities={activityStore.activities}
-          selectActivity={activityStore.selectActivity}
           deleteActivity={deleteActivity}
           submitting={submitting}
           target={target}
@@ -42,18 +34,12 @@ const ActivityDashboard: React.FC<IProps> = ({
       <Grid.Column width={6}>
         {/* && - everything to the right only display if it is not null*/}
         {selectedActivity && !editMode && (
-          <ActivityDetails
-            setEditMode={setEditMode}
-            setSelectedActivity={setSelectedActivity}
-          />
+          <ActivityDetails />
         )}
         {editMode && (
           <ActivityForm
             key={(selectedActivity && selectedActivity.id) || 0} //5.067 - bc it will cause component to reinitialize when you click Edit & createActivity
-            setEditMode={setEditMode}
             activity={selectedActivity!}
-            editActivity={editActivity}
-            submitting={submitting}
           />
         )}{" "}
         {/* 5.064 - add ! instead of union type null */}

@@ -55,6 +55,33 @@ class ActivityStore {
         this.selectedActivity = this.activityRegistry.get(id);
         this.editMode = false;
     }
+
+    @action editActivity = async (activity: IActivity) => {
+        this.submitting = true;
+        try {
+            await agent.Activities.update(activity);
+            this.activityRegistry.set(activity.id, activity);
+            this.selectedActivity = activity;
+            this.editMode = false;
+            this.submitting = false;
+        } catch (error) {
+            this.submitting = false;
+            console.log(error);
+        }
+    }
+
+    @action openEditForm = (id: string) => {
+        this.selectedActivity = this.activityRegistry.get(id);
+        this.editMode = true;
+    }
+
+    @action cancelSelectedActivity = () => {
+        this.selectedActivity = undefined;
+    }
+
+    @action cancelFormOpen = () => {
+        this.editMode = false;
+    }
 }
 
 export default createContext(new ActivityStore()) //7.081 - make sure to auto import from reactimport { IActivity } from './../models/activity';
