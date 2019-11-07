@@ -8,7 +8,7 @@ import ActivityStore from '../../../app/stores/activityStore'
 
 const ActivityDashboard: React.FC = () => {
   const activityStore = useContext(ActivityStore);
-  const {editMode, selectedActivity} = activityStore;
+  const {editMode, activity} = activityStore;
 
   return (
     <Grid>
@@ -17,13 +17,13 @@ const ActivityDashboard: React.FC = () => {
       </Grid.Column>
       <Grid.Column width={6}>
         {/* && - everything to the right only display if it is not null*/}
-        {selectedActivity && !editMode && (
+        {activity && !editMode && (
           <ActivityDetails />
         )}
         {editMode && (
           <ActivityForm
-            key={(selectedActivity && selectedActivity.id) || 0} //5.067 - bc it will cause component to reinitialize when you click Edit & createActivity
-            activity={selectedActivity!}
+            key={(activity && activity.id) || 0} //5.067 - bc it will cause component to reinitialize when you click Edit & createActivity
+            activity={activity!}
           />
         )}{" "}
         {/* 5.064 - add ! instead of union type null */}
