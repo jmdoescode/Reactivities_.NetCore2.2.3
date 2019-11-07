@@ -10,7 +10,7 @@ const NavBar: React.FC = () => {
   return (
     <Menu fixed="top" inverted>
       <Container>
-        <Menu.Item header as={NavLink} to='/'>
+        <Menu.Item header as={NavLink} exact to='/'>
           <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />{" "}
           {/* or you can do {marginRight: '10px'} as a string */}
           Reactivities
