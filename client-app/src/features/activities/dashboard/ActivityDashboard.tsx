@@ -16,17 +16,7 @@ const ActivityDashboard: React.FC = () => {
         <ActivityList />
       </Grid.Column>
       <Grid.Column width={6}>
-        {/* && - everything to the right only display if it is not null*/}
-        {activity && !editMode && (
-          <ActivityDetails />
-        )}
-        {editMode && (
-          <ActivityForm
-            key={(activity && activity.id) || 0} //5.067 - bc it will cause component to reinitialize when you click Edit & createActivity
-            activity={activity!}
-          />
-        )}{" "}
-        {/* 5.064 - add ! instead of union type null */}
+        <h2>Activity Filters</h2> {/* 8.100 - just replacing this for now */}
       </Grid.Column>
     </Grid>
   );
