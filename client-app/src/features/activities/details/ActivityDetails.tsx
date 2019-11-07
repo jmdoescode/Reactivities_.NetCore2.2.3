@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
+import { Link } from "react-router-dom";
 
 const ActivityDetails: React.FC = () => {
   const activityStore = useContext(ActivityStore);
@@ -24,7 +25,7 @@ const ActivityDetails: React.FC = () => {
         <Button.Group widths={2}>
           {/* width of 2 to represent there are 2 buttons */}
           <Button
-            onClick={() => openEditForm(activity!.id)}
+            as={Link} to={`/activities/${activity!.id}`}
             basic
             color="blue"
             content="Edit"
