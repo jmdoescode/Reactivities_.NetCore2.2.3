@@ -25,7 +25,7 @@ const ActivityDetails: React.FC = () => {
         <Button.Group widths={2}>
           {/* width of 2 to represent there are 2 buttons */}
           <Button
-            as={Link} to={`/activities/${activity!.id}`}
+            onClick={() => openEditForm(activity!.id)}
             basic
             color="blue"
             content="Edit"
