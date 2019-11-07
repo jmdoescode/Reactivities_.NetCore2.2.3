@@ -45,7 +45,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
         <Button.Group widths={2}>
           {/* width of 2 to represent there are 2 buttons */}
           <Button
-            onClick={() => openEditForm(activity!.id)}
+            as={Link} to={`/manage/${activity.id}`}
             basic
             color="blue"
             content="Edit"
