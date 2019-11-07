@@ -23,7 +23,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
 
   useEffect(() => {
     loadActivity(match.params.id);
-  }, [loadActivity]);
+  }, [loadActivity, match.params.id]);
 
   if(loadingInitial || !activity) return <LoadingComponent content='Loading activity...'/>
 
