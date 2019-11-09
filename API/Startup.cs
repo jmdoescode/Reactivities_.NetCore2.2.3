@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using System.Reflection.PortableExecutable;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +35,10 @@ namespace API
                 });
             });
             services.AddMediatR(typeof(Application.Activities.List.Handler).Assembly); //finds the assembly in which the typeof(List.Handler) lives
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .AddFluentValidation(conf =>
+                conf.RegisterValidatorsFromAssemblyContaining<Application.Activities.Create>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
