@@ -1,11 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { IActivity } from './../models/activity';
+import { history } from '../..'; //10.131 - if a file is called index.tsx then it doesn't need to be specified
 
 axios.defaults.baseURL = 'http://localhost:5000/api'; //6.071 - every api request will use this root path
 
 axios.interceptors.response.use(undefined, error => {
     if (error.response.status === 404) {
-        throw error.response;
+        history.push('/notfound');
     }
 });
 
@@ -24,7 +25,7 @@ const requests = {
 }
 
 const Activities = {
-    list: (): Promise<IActivity[]> => requests.get('/activities'), 
+    list: (): Promise<IActivity[]> => requests.get('/activities'),
     details: (id: string) => requests.get(`/activities/${id}`),
     create: (activity: IActivity) => requests.post('/activities', activity),
     update: (activity: IActivity) => requests.put(`/activities/${activity.id}`, activity),
