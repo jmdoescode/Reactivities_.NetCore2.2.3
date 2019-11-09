@@ -6,6 +6,10 @@ import { toast } from 'react-toastify';
 axios.defaults.baseURL = 'http://localhost:5000/api'; //6.071 - every api request will use this root path
 
 axios.interceptors.response.use(undefined, error => {
+    console.log(error);
+    if(error.message === 'Network Error' && !error.response) {
+        toast.error('Network error - make sure API is running');
+    }
     const {status, data, config} = error.response;
     if (status === 404) {
         history.push('/notfound');

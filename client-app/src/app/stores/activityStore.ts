@@ -39,7 +39,6 @@ class ActivityStore {
                 });
                 this.loadingInitial = false
             });
-            console.log(this.groupActivitiesByDate(activities));
         } catch (error){
             runInAction('load activities error', () => {
                 this.loadingInitial = false //7.084 - in the catch as well so that if we have a problem it'll stay in loading

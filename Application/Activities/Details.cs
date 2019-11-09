@@ -26,8 +26,6 @@ namespace Application.Activities
 
             public async Task<Activity> Handle(Query request, CancellationToken cancellationToken)
             {
-                throw new Exception("Computer says no!"); //10.133 - throws internal error
-
                 var activity = await _context.Activities.FindAsync(request.Id);
 
                 if(activity == null)
