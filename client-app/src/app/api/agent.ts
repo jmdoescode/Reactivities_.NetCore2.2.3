@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { IActivity } from './../models/activity';
 import { history } from '../..'; //10.131 - if a file is called index.tsx then it doesn't need to be specified
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'http://localhost:5000/api'; //6.071 - every api request will use this root path
 
@@ -11,6 +12,9 @@ axios.interceptors.response.use(undefined, error => {
     }
     if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')){
         history.push('/notfound');
+    }
+    if (status === 500) {
+        toast.error('Server error - check the terminal for more info!');
     }
 });
 
