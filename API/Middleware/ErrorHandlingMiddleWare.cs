@@ -9,15 +9,14 @@ using Newtonsoft.Json;
 
 namespace API.Middleware
 {
-    public class ErrorHandlingMiddleWare
+    public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ErrorHandlingMiddleWare> _logger;
-
-        public ErrorHandlingMiddleWare(RequestDelegate next, ILogger<ErrorHandlingMiddleWare> logger)
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
         {
-            _next = next;
             _logger = logger;
+            _next = next;
         }
 
         public async Task Invoke(HttpContext context)
@@ -32,7 +31,7 @@ namespace API.Middleware
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, Exception ex, ILogger<ErrorHandlingMiddleWare> logger)
+        private async Task HandleExceptionAsync(HttpContext context, Exception ex, ILogger<ErrorHandlingMiddleware> logger)
         {
             object errors = null;
 
@@ -43,7 +42,7 @@ namespace API.Middleware
                     errors = re.Errors;
                     context.Response.StatusCode = (int)re.Code;
                     break;
-                case Exception e: //10.127 - need bc we are catching everything
+                case Exception e:
                     logger.LogError(ex, "SERVER ERROR");
                     errors = string.IsNullOrWhiteSpace(e.Message) ? "Error" : e.Message;
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -53,7 +52,8 @@ namespace API.Middleware
             context.Response.ContentType = "application/json";
             if (errors != null)
             {
-                var result = JsonConvert.SerializeObject(new {
+                var result = JsonConvert.SerializeObject(new
+                {
                     errors
                 });
 
