@@ -3,7 +3,11 @@ export interface IActivity {
     title: string;
     description: string;
     category: string;
-    date: Date | null; //11.143 - changed to a date
+    date: Date; //11.143 - changed to a date
     city: string;
     venue: string;
+}
+
+export interface IActivityFormValues extends Partial<IActivity> {
+    time?: Date;
 }
