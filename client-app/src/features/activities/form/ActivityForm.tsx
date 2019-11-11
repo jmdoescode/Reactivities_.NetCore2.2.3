@@ -11,7 +11,7 @@ import { TextAreaInput } from "./../../../app/common/form/TextAreaInput";
 import { SelectInput } from "./../../../app/common/form/SelectInput";
 import { category } from "./../../../app/common/options/categoryOptions";
 import { DateInput } from "./../../../app/common/form/DateInput";
-import { combineDateAndTime } from './../../../app/common/util/util';
+import { combineDateAndTime } from "./../../../app/common/util/util";
 
 interface DetailParams {
   id: string;
@@ -37,17 +37,11 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   useEffect(() => {
     if (match.params.id) {
       setLoading(true);
-      loadActivity(match.params.id).then(
-        (activity) => setActivity(new ActivityFormValues(activity))
-      )
-      .finally(() =>
-        setLoading(false)
-      );
+      loadActivity(match.params.id)
+        .then(activity => setActivity(new ActivityFormValues(activity)))
+        .finally(() => setLoading(false));
     }
-  }, [
-    loadActivity,
-    match.params.id
-  ]);
+  }, [loadActivity, match.params.id]);
 
   // const handleSubmit = () => {
   //   if (activity.id.length === 0) {
@@ -76,9 +70,17 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
 
   const handleFinalFormSubmit = (values: any) => {
     const dateAndTime = combineDateAndTime(values.date, values.time);
-    const {date, time, ...activity} = values; //11.146 - what is going to be inside the ...activity is everything minus the date and the time
+    const { date, time, ...activity } = values; //11.146 - what is going to be inside the ...activity is everything minus the date and the time
     activity.date = dateAndTime;
-    console.log(activity);
+    if (!activity.id) {
+      let newActivity = {
+        ...activity,
+        id: uuid() //5.066 - from the uuid npm
+      };
+      createActivity(newActivity)
+    } else {
+      editActivity(activity);
+    }
   };
 
   return (
@@ -146,7 +148,10 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                   content="Submit"
                 />
                 <Button
-                  onClick={() => history.push("/activities")}
+                  onClick={activity.id
+                    ? () => history.push(`/activities/${activity.id}`)
+                    : () => history.push("/activities")
+                  }
                   disabled={loading}
                   floated="right"
                   type="button"
