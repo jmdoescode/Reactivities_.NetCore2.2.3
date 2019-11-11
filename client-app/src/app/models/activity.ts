@@ -1,5 +1,3 @@
-import { initializeInstance } from "mobx/lib/internal";
-
 export interface IActivity {
     id: string;
     title: string;

@@ -24,6 +24,8 @@ export const DateInput: React.FC<IProps> = ({
             time={time}
             value={input.value || null} //11.143 - || is in case we're creating
             onChange={input.onChange}
+            onBlur={input.onBlur}
+            onKeyDown={(e) => e.preventDefault()}
             {...rest}
           />
           {touched && error && (
