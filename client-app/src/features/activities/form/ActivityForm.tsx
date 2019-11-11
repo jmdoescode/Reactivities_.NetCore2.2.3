@@ -92,11 +92,10 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             render={({ handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
                 <Field
-                  onChange={handleInputChange}
+                  component={TextInput}
                   name="title"
                   placeholder="Title"
                   value={activity.title}
-                  component='input'
                 />
                 <Field
                   component={TextInput}
