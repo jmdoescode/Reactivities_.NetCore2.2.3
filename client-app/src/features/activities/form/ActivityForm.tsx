@@ -104,14 +104,14 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                 <Form.Group widths="equal">
                   <Field
                     component={DateInput}
-                    date="true"
+                    date={true}
                     name="date"
                     placeholder="Date"
                     value={activity.date}
                   />
                   <Field
                     component={DateInput}
-                    time="true"
+                    time={true}
                     name="time"
                     placeholder="Time"
                     value={activity.time}
