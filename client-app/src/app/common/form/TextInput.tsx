@@ -24,5 +24,3 @@ export const TextInput: React.FC<IProps> = ({
     </Form.Field>
   );
 };
-
-export default TextInput;
