@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
@@ -13,9 +12,9 @@ namespace API.Controllers
     public class ActivitiesController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> List(CancellationToken ct)
+        public async Task<ActionResult<List<Activity>>> List()
         {
-            return await Mediator.Send(new List.Query(), ct);
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
@@ -41,7 +40,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Unit>> Delete(Guid id)
         {
-            return await Mediator.Send(new Delete.Command{Id = id}); //use curly brackets to initialize the Id
+            return await Mediator.Send(new Delete.Command{Id = id});
         }
     }
 }

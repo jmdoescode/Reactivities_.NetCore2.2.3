@@ -1,12 +1,9 @@
-﻿using System.Runtime.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Persistence;
 using Domain;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace API.Controllers
 {
@@ -24,7 +21,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {
-            var values = await _context.Values.ToListAsync(); //passes off request of db to a different thread and awaits the return but it does not block the thread the request comes in on
+            var values = await _context.Values.ToListAsync();
             return Ok(values);
         }
 
@@ -33,7 +30,7 @@ namespace API.Controllers
         public async Task<ActionResult<Value>> Get(int id)
         {
             var value = await _context.Values.FindAsync(id);
-            return value;
+            return Ok(value);
         }
 
         // POST api/values

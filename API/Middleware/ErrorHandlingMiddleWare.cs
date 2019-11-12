@@ -1,6 +1,5 @@
-using System.Net;
-using System.Threading;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Application.Errors;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +23,7 @@ namespace API.Middleware
             try
             {
                 await _next(context);
-            }
+            } 
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex, _logger);
@@ -52,7 +51,7 @@ namespace API.Middleware
             context.Response.ContentType = "application/json";
             if (errors != null)
             {
-                var result = JsonConvert.SerializeObject(new
+                var result = JsonConvert.SerializeObject(new 
                 {
                     errors
                 });

@@ -1,12 +1,12 @@
-import React from "react";
-import { FieldRenderProps } from "react-final-form";
-import { FormFieldProps, Form, Label } from "semantic-ui-react";
+import React from 'react';
+import { FieldRenderProps } from 'react-final-form';
+import { FormFieldProps, Form, Label } from 'semantic-ui-react';
 
 interface IProps
-  extends FieldRenderProps<string, HTMLElement>,
+  extends FieldRenderProps<string, HTMLInputElement>,
     FormFieldProps {}
 
-export const TextInput: React.FC<IProps> = ({
+const TextInput: React.FC<IProps> = ({
   input,
   width,
   type,
@@ -15,12 +15,14 @@ export const TextInput: React.FC<IProps> = ({
 }) => {
   return (
     <Form.Field error={touched && !!error} type={type} width={width}>
-      <input {...input} placeholder={placeholder} type='text'></input>
+      <input {...input} placeholder={placeholder} />
       {touched && error && (
-          <Label basic color='red'>
-              {error}
-          </Label>
+        <Label basic color='red'>
+          {error}
+        </Label>
       )}
     </Form.Field>
   );
 };
+
+export default TextInput;

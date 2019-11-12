@@ -1,11 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
-using Domain;
-using System.ComponentModel.DataAnnotations;
-using FluentValidation;
 
 namespace Application.Activities
 {
@@ -42,6 +41,7 @@ namespace Application.Activities
             {
                 _context = context;
             }
+
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var activity = new Activity
@@ -55,7 +55,7 @@ namespace Application.Activities
                     Venue = request.Venue
                 };
 
-                _context.Activities.Add(activity); //not using AddAsync() bc that is used for special value generators
+                _context.Activities.Add(activity);
                 var success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;
