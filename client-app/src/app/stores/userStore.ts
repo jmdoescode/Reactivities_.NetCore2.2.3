@@ -20,11 +20,17 @@ export default class UserStore {
             runInAction(() => {
                 this.user = user;
             })
+            this.rootStore.commonStore.setToken(user.token);
             history.push('/activities');
-            console.log(user);
         } catch (error) {
             throw error;
             //console.log(error);
         }
+    }
+
+    @action logout = () => {
+        this.rootStore.commonStore.setToken(null);
+        this.user = null;
+        history.push('/');
     }
 }
