@@ -8,6 +8,7 @@ import { IUserFormValues } from "../../app/models/user";
 import { FORM_ERROR } from "final-form";
 import { Label } from "semantic-ui-react";
 import { combineValidators, isRequired } from "revalidate";
+import { ErrorMessage } from './../../app/common/form/ErrorMessage';
 
 const validate = combineValidators({
   email: isRequired("Email"),
@@ -34,7 +35,7 @@ export const LoginForm = () => {
         pristine,
         dirtySinceLastSubmit
       }) => (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} error>
           <Header
             as="h2"
             content="Login to Reactivities"
@@ -48,8 +49,8 @@ export const LoginForm = () => {
             placeholder="Password"
             type="password"
           />
-          {submitError && (
-            <Label color="red" basic content={submitError.statusText} />
+          {submitError && !dirtySinceLastSubmit && (
+            <ErrorMessage error={submitError} text='Invalid email or password' />
           )}
           <Button
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}

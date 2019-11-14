@@ -32,7 +32,7 @@ const HomePage = () => {
         ) : (
           <Fragment>
             <Header as="h2" inverted content="Welcome to Reactivities" />
-            <Button onClick={() => openModal(<LoginForm />)} as={Link} to="/login" size="huge" inverted>
+            <Button onClick={() => openModal(<LoginForm />)} size="huge" inverted>
               Login
             </Button>
             <Button as={Link} to="/register" size="huge" inverted>
