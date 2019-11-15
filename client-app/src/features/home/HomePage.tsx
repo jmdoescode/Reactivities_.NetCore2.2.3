@@ -5,11 +5,13 @@ import { RootStoreContext } from "../../app/stores/rootStore";
 import { useContext } from "react";
 import { LoginForm } from './../user/LoginForm';
 import RegisterForm from './../user/RegisterForm';
+import { IUserFormValues } from './../../app/models/user'
 
 const HomePage = () => {
   const rootStore = useContext(RootStoreContext);
   const { isLoggedIn, user } = rootStore.userStore;
   const {openModal} = rootStore.modalStore;
+  const { login } = rootStore.userStore;
 
   return (
     <Segment inverted textAlign="center" vertical className="masthead">
@@ -38,6 +40,21 @@ const HomePage = () => {
             </Button>
             <Button onClick={() => openModal(<RegisterForm />)} size="huge" inverted>
               Register
+            </Button>
+            <br />
+            <Button
+              onClick = {() =>
+                login({
+                  email: 'bob@test.com',
+                  password: 'Pa$$w0rd',
+                  displayName: '',
+                  username: ''
+                })
+              }
+              size="huge"
+              inverted
+            >
+              AutoLogin
             </Button>
           </Fragment>
         )}
