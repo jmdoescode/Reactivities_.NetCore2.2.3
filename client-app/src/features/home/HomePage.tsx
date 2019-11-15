@@ -5,7 +5,6 @@ import { RootStoreContext } from "../../app/stores/rootStore";
 import { useContext } from "react";
 import { LoginForm } from './../user/LoginForm';
 import RegisterForm from './../user/RegisterForm';
-import { IUserFormValues } from './../../app/models/user'
 
 const HomePage = () => {
   const rootStore = useContext(RootStoreContext);
