@@ -11,7 +11,7 @@ using Domain;
 
 namespace Application.Activities
 {
-    public class Attend
+    public class Unattend
     {
         public class Command : IRequest
         {
@@ -30,31 +30,25 @@ namespace Application.Activities
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                // handler logic
                 var activity = await _context.Activities.FindAsync(request.Id);
 
-                if(activity == null)
-                    throw new RestException(HttpStatusCode.NotFound, new {Activity="Could not find activity"});
+                if (activity == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { Activity = "Cound not find activity" });
 
                 var user = await _context.Users.SingleOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetCurrentUsername());
 
-                var attendance = await _context.UserActivities.SingleOrDefaultAsync(x =>
-                    x.ActivityId == activity.Id && x.AppUserId == user.Id);
+                var attendance = await _context.UserActivities
+                    .SingleOrDefaultAsync(x => x.ActivityId == activity.Id &&
+                        x.AppUserId == user.Id);
 
-                if (attendance != null)
-                    throw new RestException(HttpStatusCode.BadRequest, 
-                        new {Attendance = "Already attending this activity"});
+                if (attendance == null)
+                    return Unit.Value;
 
-                attendance = new UserActivity
-                {
-                    Activity = activity,
-                    AppUser = user,
-                    IsHost = false,
-                    DateJoined = DateTime.Now
-                };
+                if (attendance.IsHost)
+                    throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "You cannot remove yourself as host" });
 
-                _context.UserActivities.Add(attendance);
+                _context.UserActivities.Remove(attendance);
 
                 var success = await _context.SaveChangesAsync() > 0;
 
