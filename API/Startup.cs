@@ -2,7 +2,6 @@
 using API.Middleware;
 using Application.Activities;
 using Application.Interfaces;
-using Application.Photos;
 using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
