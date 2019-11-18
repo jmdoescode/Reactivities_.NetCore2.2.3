@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Grid } from 'semantic-ui-react';
 import ProfileHeader from './ProfileHeader';
-import { ProfileContent } from './ProfileContent';
+import ProfileContent from './ProfileContent';
 import { RouteComponentProps } from 'react-router';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import LoadingComponent from '../../app/layout/LoadingComponent';

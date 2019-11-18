@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {Tab} from 'semantic-ui-react';
 import ProfilePhotos from './ProfilePhotos';
 
@@ -10,13 +10,15 @@ const panes = [
     {menuItem: 'Following', render: () => <Tab.Pane>Following content</Tab.Pane>},
 ]
 
-export const ProfileContent = () => {
+const ProfileContent = () => {
     return (
-        <Tab
+        <Tab 
             menu={{fluid: true, vertical: true}}
             menuPosition='right'
             panes={panes}
-            activeIndex = {1}
+            activeIndex={1}
         />
     )
 }
+
+export default ProfileContent

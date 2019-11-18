@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
-import { Segment, List, Item, Label, Image } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import { IAttendee } from "../../../app/models/activity";
+import React, { Fragment } from 'react';
+import { Segment, List, Item, Label, Image } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { IAttendee } from '../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
 
 interface IProps {
@@ -12,17 +12,17 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
   return (
     <Fragment>
       <Segment
-        textAlign="center"
-        style={{ border: "none" }}
-        attached="top"
+        textAlign='center'
+        style={{ border: 'none' }}
+        attached='top'
         secondary
         inverted
-        color="teal"
+        color='teal'
       >
-        {attendees.length} {attendees.length === 1 ? "Person" : "People"} going
+        {attendees.length} {attendees.length === 1 ? 'Person' : 'People'} going
       </Segment>
       <Segment attached>
-      <List relaxed divided>
+        <List relaxed divided>
           {attendees.map(attendee => (
             <Item key={attendee.username} style={{ position: 'relative' }}>
               {attendee.isHost && (
