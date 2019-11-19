@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using static Infrastructure.Security.IsHostRequirment;
+using API.SignalR;
 
 namespace API
 {
@@ -50,6 +51,7 @@ namespace API
             });
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(List.Handler));
+            services.AddSignalR();
             services.AddMvc(opt =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -109,6 +111,7 @@ namespace API
             // app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseCors("CorsPolicy");
+            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat");});
             app.UseMvc();
         }
     }
