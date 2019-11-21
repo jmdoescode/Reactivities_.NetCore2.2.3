@@ -6,7 +6,7 @@ import { history } from '../..';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
 import { setActivityProps, createAttendee } from '../common/util/util';
-import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
 const LIMIT = 2;
 
@@ -70,14 +70,11 @@ export default class ActivityStore {
       .withUrl('http://localhost:5000/chat', {
         accessTokenFactory: () => this.rootStore.commonStore.token!
       })
-      .configureLogging(LogLevel.Information)
       .build();
 
     this.hubConnection
       .start()
-      .then(() => console.log(this.hubConnection!.state))
       .then(() => {
-        console.log('Attempting to joing group');
         this.hubConnection!.invoke('AddToGroup', activityId);
       })
       .catch(error => console.log('Error establishing connection: ', error));
