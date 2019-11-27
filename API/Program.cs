@@ -15,12 +15,11 @@ namespace API
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                try 
-                
+                try
                 {
                     var context = services.GetRequiredService<DataContext>();
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
@@ -39,6 +38,7 @@ namespace API
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseKestrel(x => x.AddServerHeader = false)
                 .UseStartup<Startup>();
     }
 }
