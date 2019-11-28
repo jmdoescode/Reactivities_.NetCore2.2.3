@@ -3,6 +3,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>89e3b1df-3fb4-4947-8463-699a1fe9657a</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App"/>
@@ -12,5 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj"/>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
+    <ProjectReference Include="..\Domain\Domain.csproj"/>
   </ItemGroup>
 </Project>
