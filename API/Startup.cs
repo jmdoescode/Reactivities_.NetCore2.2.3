@@ -188,15 +188,6 @@ namespace API
                 endpoints.MapHub<ChatHub>("/chat");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
-
-            // app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat");});
-            // app.UseMvc(routes => 
-            // {
-            //     routes.MapSpaFallbackRoute(
-            //         name: "spa-fallback",
-            //         defaults: new {controller = "Fallback", action = "Index"}
-            //     );
-            // });
         }
     }
 }
