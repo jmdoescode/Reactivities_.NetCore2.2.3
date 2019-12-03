@@ -25,6 +25,7 @@ using static Infrastructure.Security.IsHostRequirment;
 using API.SignalR;
 using System.Threading.Tasks;
 using Application.Profiles;
+using Microsoft.Extensions.Hosting;
 
 namespace API
 {
@@ -43,7 +44,8 @@ namespace API
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseLazyLoadingProxies();
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                //opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             ConfigureServices(services);
@@ -84,13 +86,12 @@ namespace API
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(List.Handler));
             services.AddSignalR();
-            services.AddMvc(opt =>
+            services.AddControllers(opt =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>());
 
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -142,7 +143,7 @@ namespace API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
@@ -171,20 +172,31 @@ namespace API
                     .ScriptSources(s => s.Self().CustomSources("sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU="))
                 );
 
+            // app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            // app.UseHttpsRedirection();
-            app.UseAuthentication();
+            app.UseRouting();
             app.UseCors("CorsPolicy");
-            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat");});
-            app.UseMvc(routes => 
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new {controller = "Fallback", action = "Index"}
-                );
+                endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
+
+            // app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat");});
+            // app.UseMvc(routes => 
+            // {
+            //     routes.MapSpaFallbackRoute(
+            //         name: "spa-fallback",
+            //         defaults: new {controller = "Fallback", action = "Index"}
+            //     );
+            // });
         }
     }
 }
