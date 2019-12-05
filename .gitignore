@@ -1,7 +1,0 @@
-bin
-obj
-.DS_Store
-*.db
-wwwroot
-publish
-.vscode
